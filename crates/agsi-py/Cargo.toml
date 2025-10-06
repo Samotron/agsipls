@@ -1,0 +1,18 @@
+[package]
+name = "agsi-py"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Python bindings for AGSi library"
+
+[lib]
+name = "agsi_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+agsi-core = { path = "../agsi-core" }
+pyo3 = { version = "0.21", features = ["extension-module"] }
+serde_json = { workspace = true }

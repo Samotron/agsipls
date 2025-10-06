@@ -1,0 +1,158 @@
+{
+  "type": "record",
+  "name": "Document",
+  "namespace": "agsi.v1",
+  "doc": "AGSi Document - Top level container for ground model data",
+  "fields": [
+    {
+      "name": "agsSchema",
+      "type": {
+        "type": "record",
+        "name": "SchemaInfo",
+        "fields": [
+          {"name": "version", "type": "string"},
+          {"name": "variant", "type": ["null", "string"], "default": null}
+        ]
+      }
+    },
+    {
+      "name": "agsFile",
+      "type": {
+        "type": "record",
+        "name": "FileInfo",
+        "fields": [
+          {"name": "fileId", "type": "string"},
+          {"name": "fileName", "type": ["null", "string"], "default": null},
+          {"name": "fileDate", "type": ["null", "string"], "default": null},
+          {"name": "fileAuthor", "type": ["null", "string"], "default": null},
+          {"name": "fileSoftware", "type": ["null", "string"], "default": null},
+          {"name": "fileVersion", "type": ["null", "string"], "default": null},
+          {"name": "fileComments", "type": ["null", "string"], "default": null}
+        ]
+      }
+    },
+    {
+      "name": "agsProject",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Project",
+          "fields": [
+            {"name": "id", "type": "string"},
+            {"name": "name", "type": "string"},
+            {"name": "description", "type": ["null", "string"], "default": null},
+            {"name": "client", "type": ["null", "string"], "default": null},
+            {"name": "contractor", "type": ["null", "string"], "default": null},
+            {
+              "name": "location",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "Location",
+                  "fields": [
+                    {"name": "name", "type": "string"},
+                    {"name": "country", "type": ["null", "string"], "default": null},
+                    {"name": "coordinates", "type": ["null", {"type": "array", "items": "double"}], "default": null},
+                    {"name": "crs", "type": ["null", "string"], "default": null}
+                  ]
+                }
+              ],
+              "default": null
+            },
+            {
+              "name": "dates",
+              "type": [
+                "null",
+                {
+                  "type": "record",
+                  "name": "ProjectDates",
+                  "fields": [
+                    {"name": "start", "type": ["null", "string"], "default": null},
+                    {"name": "end", "type": ["null", "string"], "default": null},
+                    {"name": "dataCollection", "type": ["null", "string"], "default": null}
+                  ]
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "agsiModel",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "GroundModel",
+          "fields": [
+            {"name": "id", "type": "string"},
+            {"name": "name", "type": "string"},
+            {"name": "description", "type": ["null", "string"], "default": null},
+            {"name": "modelType", "type": {"type": "enum", "name": "ModelType", "symbols": ["STRATIGRAPHIC", "STRUCTURAL", "HYDROGEOLOGICAL", "GEOTECHNICAL", "ENVIRONMENTAL", "COMPOSITE"]}},
+            {"name": "dimension", "type": {"type": "enum", "name": "ModelDimension", "symbols": ["ONE_D", "TWO_D", "THREE_D"]}},
+            {
+              "name": "materials",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Material",
+                  "fields": [
+                    {"name": "id", "type": "string"},
+                    {"name": "name", "type": "string"},
+                    {"name": "description", "type": ["null", "string"], "default": null},
+                    {"name": "materialType", "type": {"type": "enum", "name": "MaterialType", "symbols": ["SOIL", "ROCK", "FILL", "MADE_GROUND", "ANTHROPOGENIC", "WATER", "VOID", "UNKNOWN"]}},
+                    {"name": "geology", "type": ["null", "string"], "default": null},
+                    {
+                      "name": "properties",
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "type": "record",
+                          "name": "MaterialProperty",
+                          "fields": [
+                            {"name": "name", "type": "string"},
+                            {"name": "value", "type": ["double", "string", "boolean", {"type": "record", "name": "Range", "fields": [{"name": "min", "type": "double"}, {"name": "max", "type": "double"}]}, {"type": "array", "items": "double"}]},
+                            {"name": "unit", "type": ["null", "string"], "default": null},
+                            {"name": "method", "type": ["null", "string"], "default": null},
+                            {"name": "source", "type": ["null", {"type": "enum", "name": "PropertySource", "symbols": ["TESTED", "ESTIMATED", "LITERATURE", "ASSUMED", "CALCULATED"]}], "default": null}
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "components",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "ModelComponent",
+                  "fields": [
+                    {"name": "id", "type": "string"},
+                    {"name": "name", "type": "string"},
+                    {"name": "componentType", "type": {"type": "enum", "name": "ComponentType", "symbols": ["LAYER", "LENS", "VOLUME", "FAULT", "INTRUSION", "BOUNDARY"]}},
+                    {"name": "materialId", "type": "string"},
+                    {"name": "geometry", "type": "bytes"},
+                    {"name": "top", "type": ["null", "double"], "default": null},
+                    {"name": "base", "type": ["null", "double"], "default": null},
+                    {"name": "thickness", "type": ["null", "double"], "default": null}
+                  ]
+                }
+              }
+            },
+            {"name": "crs", "type": ["null", "string"], "default": null}
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "agsi-py"
+version = "0.1.0"
+description = "Python bindings for AGSi ground model library"
+authors = [{name = "AGSi Contributors"}]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
+]
+license = {text = "MIT OR Apache-2.0"}
+
+[project.urls]
+Homepage = "https://github.com/yourusername/agsipls"
+Repository = "https://github.com/yourusername/agsipls"
+
+[tool.maturin]
+module-name = "agsi_py"
+manifest-path = "Cargo.toml"
+features = ["pyo3/extension-module"]

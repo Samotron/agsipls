@@ -1,0 +1,67 @@
+[workspace]
+members = [
+    "crates/agsi-core",
+    "crates/agsi",
+    "crates/agsi-py",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["AGSi Contributors"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yourusername/agsipls"
+
+[workspace.dependencies]
+# Core data structures
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+apache-avro = { version = "0.17", features = ["derive"] }
+prost = "0.13"
+prost-types = "0.13"
+
+# Geometry handling
+geo = "0.28"
+geo-types = "0.7"
+wkt = "0.11"
+geozero = { version = "0.13", features = ["with-wkb", "with-geo"] }
+
+# CLI tools
+clap = { version = "4.5", features = ["derive", "cargo"] }
+crossterm = "0.28"
+ratatui = "0.29"
+inquire = "0.7"
+dialoguer = "0.11"
+
+# Validation
+jsonschema = "0.26"
+validator = { version = "0.18", features = ["derive"] }
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+miette = { version = "7.0", features = ["fancy"] }
+
+# Async runtime
+tokio = { version = "1.42", features = ["full"] }
+tokio-stream = "0.1"
+
+# MCP and LSP
+tower = "0.5"
+tower-lsp = "0.20"
+serde_jsonrpc = "0.5"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Testing
+proptest = "1.6"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

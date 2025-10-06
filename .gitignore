@@ -1,0 +1,24 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Examples output
+examples/*.agsi.json
+examples/*.json
+
+# Test files
+/test_*.agsi.json
+/tmp_*.json
+
+# Logs
+*.log

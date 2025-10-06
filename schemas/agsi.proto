@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package agsi.v1;
+
+// AGSi Document - Top level container
+message Document {
+  SchemaInfo ags_schema = 1;
+  FileInfo ags_file = 2;
+  optional Project ags_project = 3;
+  repeated GroundModel agsi_model = 4;
+}
+
+// Schema version information
+message SchemaInfo {
+  string version = 1;
+  optional string variant = 2;
+}
+
+// File metadata
+message FileInfo {
+  string file_id = 1;
+  optional string file_name = 2;
+  optional string file_date = 3;
+  optional string file_author = 4;
+  optional string file_software = 5;
+  optional string file_version = 6;
+  optional string file_comments = 7;
+}
+
+// Project information
+message Project {
+  string id = 1;
+  string name = 2;
+  optional string description = 3;
+  optional string client = 4;
+  optional string contractor = 5;
+  optional Location location = 6;
+  optional ProjectDates dates = 7;
+}
+
+// Location information
+message Location {
+  string name = 1;
+  optional string country = 2;
+  repeated double coordinates = 3;
+  optional string crs = 4;
+}
+
+// Project dates
+message ProjectDates {
+  optional string start = 1;
+  optional string end = 2;
+  optional string data_collection = 3;
+}
+
+// Ground model
+message GroundModel {
+  string id = 1;
+  string name = 2;
+  optional string description = 3;
+  ModelType model_type = 4;
+  ModelDimension dimension = 5;
+  repeated Material materials = 6;
+  repeated ModelComponent components = 7;
+  optional string crs = 8;
+}
+
+// Model types
+enum ModelType {
+  MODEL_TYPE_UNSPECIFIED = 0;
+  STRATIGRAPHIC = 1;
+  STRUCTURAL = 2;
+  HYDROGEOLOGICAL = 3;
+  GEOTECHNICAL = 4;
+  ENVIRONMENTAL = 5;
+  COMPOSITE = 6;
+}
+
+// Model dimensions
+enum ModelDimension {
+  MODEL_DIMENSION_UNSPECIFIED = 0;
+  ONE_D = 1;
+  TWO_D = 2;
+  THREE_D = 3;
+}
+
+// Material
+message Material {
+  string id = 1;
+  string name = 2;
+  optional string description = 3;
+  MaterialType material_type = 4;
+  optional string geology = 5;
+  repeated MaterialProperty properties = 6;
+}
+
+// Material types
+enum MaterialType {
+  MATERIAL_TYPE_UNSPECIFIED = 0;
+  SOIL = 1;
+  ROCK = 2;
+  FILL = 3;
+  MADE_GROUND = 4;
+  ANTHROPOGENIC = 5;
+  WATER = 6;
+  VOID = 7;
+  UNKNOWN = 8;
+}
+
+// Material property
+message MaterialProperty {
+  string name = 1;
+  PropertyValue value = 2;
+  optional string unit = 3;
+  optional string method = 4;
+  optional PropertySource source = 5;
+}
+
+// Property value (union type)
+message PropertyValue {
+  oneof value {
+    double number = 1;
+    string text = 2;
+    bool boolean = 3;
+    Range range = 4;
+    DoubleArray array = 5;
+  }
+}
+
+// Range value
+message Range {
+  double min = 1;
+  double max = 2;
+}
+
+// Array of doubles
+message DoubleArray {
+  repeated double values = 1;
+}
+
+// Property source
+enum PropertySource {
+  PROPERTY_SOURCE_UNSPECIFIED = 0;
+  TESTED = 1;
+  ESTIMATED = 2;
+  LITERATURE = 3;
+  ASSUMED = 4;
+  CALCULATED = 5;
+}
+
+// Model component
+message ModelComponent {
+  string id = 1;
+  string name = 2;
+  ComponentType component_type = 3;
+  string material_id = 4;
+  bytes geometry = 5; // Serialized geometry
+  optional double top = 6;
+  optional double base = 7;
+  optional double thickness = 8;
+}
+
+// Component types
+enum ComponentType {
+  COMPONENT_TYPE_UNSPECIFIED = 0;
+  LAYER = 1;
+  LENS = 2;
+  VOLUME = 3;
+  FAULT = 4;
+  INTRUSION = 5;
+  BOUNDARY = 6;
+}
