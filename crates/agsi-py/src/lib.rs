@@ -193,7 +193,7 @@ impl PyMaterial {
 
 /// Python module
 #[pymodule]
-fn agsi_py(_py: Python, m: &PyModule) -> PyResult<()> {
+fn agsi_py(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyDocument>()?;
     m.add_class::<PyValidationResult>()?;
     m.add_class::<PyMaterial>()?;

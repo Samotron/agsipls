@@ -14,5 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 agsi-core = { path = "../agsi-core" }
-pyo3 = { version = "0.21", features = ["extension-module"] }
+pyo3 = { version = "0.22", features = ["extension-module"] }
 serde_json = { workspace = true }
