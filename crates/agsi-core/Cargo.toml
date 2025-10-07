@@ -36,3 +36,7 @@ path = "../../examples/create_model.rs"
 [[example]]
 name = "3d_model"
 path = "../../examples/3d_model.rs"
+
+[[example]]
+name = "agsi_model_example"
+path = "../../examples/agsi_model_example.rs"
